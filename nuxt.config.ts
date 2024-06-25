@@ -1,3 +1,5 @@
+import fs from 'node:fs'
+
 export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
@@ -30,6 +32,24 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: true,
+  },
+
+  vite: {
+    plugins: [
+      {
+        name: 'server',
+        configureServer(server) {
+          server.ws.on('connection', (socket) => {
+            socket.on('message', (data) => {
+              const payload = JSON.parse(data.toString()) as any
+              if (payload.type === 'custom' && payload.event === 'yak-map-pos') {
+                fs.writeFileSync('yak-map-pos.json', JSON.stringify(payload.data))
+              }
+            })
+          })
+        },
+      },
+    ],
   },
 
   eslint: {
