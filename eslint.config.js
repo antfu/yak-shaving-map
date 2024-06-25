@@ -10,3 +10,6 @@ export default nuxt(
     },
   ),
 )
+  .prepend({
+    ignores: ['yak-map-pos.json'],
+  })
