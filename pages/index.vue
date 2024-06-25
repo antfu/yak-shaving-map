@@ -5,10 +5,19 @@ import chroma from 'chroma-js'
 import { type ProjectNode, projects } from '~/data'
 import poisitions from '~/yak-map-pos.json'
 
+const isDark = useDark()
+
+function toggleDark() {
+  isDark.value = !isDark.value
+}
+
 const container = ref<HTMLDivElement>()
 
+const backgroundColor = computed(() => isDark.value ? '#050505' : '#ffff')
+const luminance = computed(() => isDark.value ? 0.7 : 0.6)
+
 function toNode(project: ProjectNode, focus = false) {
-  const color = chroma(project.color || '#333')
+  const color = chroma(project.color || '#888')
   const [_l, c, h] = color.oklch()
 
   return {
@@ -21,14 +30,14 @@ function toNode(project: ProjectNode, focus = false) {
         }
       : {},
     font: {
-      color: chroma.oklch(0.7, c, h).hex(),
+      color: chroma.oklch(luminance.value, c, h).hex(),
     },
     color: {
-      border: chroma.oklch(0.7, c, h).mix('#050505', project.dashed ? 0.8 : 0.5).hex(),
-      background: chroma.oklch(0.7, c, h).mix('#050505', project.dashed ? 0.96 : 0.95).hex(),
+      border: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, project.dashed ? 0.8 : 0.5).hex(),
+      background: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, project.dashed ? 0.96 : 0.95).hex(),
       highlight: {
-        border: chroma.oklch(0.7, c, h).mix('#050505', project.dashed ? 0.8 : 0.5).hex(),
-        background: chroma.oklch(0.7, c, h).mix('#050505', 0.9).hex(),
+        border: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, project.dashed ? 0.8 : 0.5).hex(),
+        background: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, 0.9).hex(),
       },
     },
     borderWidth: focus ? 4 : 1,
@@ -44,7 +53,7 @@ function toEdges(project: ProjectNode) {
       id: `${project.name}|${from}`,
       from,
       to: project.name,
-      color: chroma.oklch(0.7, c, h).mix('#050505', 0.8).hex(),
+      color: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, 0.8).hex(),
       arrows: {
         to: {
           enabled: true,
@@ -56,7 +65,7 @@ function toEdges(project: ProjectNode) {
       id: `${project.name}|${dep}`,
       from: dep,
       to: project.name,
-      color: chroma.oklch(0.7, c, h).mix('#050505', 0.95).hex(),
+      color: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, 0.95).hex(),
       dashes: [3, 3],
       physics: false,
       // arrows: {
@@ -76,7 +85,7 @@ for (const [id, pos] of Object.entries(poisitions) as [string, { x: number, y: n
   Object.assign(project, pos)
 }
 
-const query = useUrlSearchParams('hash', { initialValue: { count: 1 } })
+const query = useUrlSearchParams('history', { initialValue: { count: 1 } })
 
 onMounted(() => {
   const nodes = new DataSet(projects.slice(0, query.count).map(project => toNode(project)))
@@ -113,6 +122,7 @@ onMounted(() => {
         dragNodes: false,
         dragView: false,
         selectable: false,
+        zoomView: false,
       },
     },
   )
@@ -145,6 +155,7 @@ onMounted(() => {
             dragNodes: true,
             dragView: true,
             selectable: true,
+            zoomView: true,
           },
         })
       }
@@ -156,6 +167,7 @@ onMounted(() => {
           dragNodes: false,
           dragView: false,
           selectable: false,
+          zoomView: false,
         },
       })
     }
@@ -167,7 +179,7 @@ onMounted(() => {
 <template>
   <div>
     <div ref="container" h-screen w-screen outline-none />
-    <div fixed left-5 top-5 flex="~ items-center gap-3">
+    <div flex="~ items-center gap-3" fixed left-0 top-0 rounded-br-2rem p5 backdrop-blur-md>
       <div text-5xl>
         🐃
       </div>
@@ -178,7 +190,12 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div fixed bottom-5 left-5 right-5 flex="~ col items-center gap-3">
+    <div flex="~ items-center gap-3" fixed right-4 top-4 rounded-1rem p2 backdrop-blur-md>
+      <button rounded-xl p3 hover:bg-gray:10 @click="toggleDark()">
+        <div i-ph-sun-duotone dark:i-ph-moon-duotone />
+      </button>
+    </div>
+    <div fixed bottom-0 left-0 right-0 p4 flex="~ col items-center gap-3">
       <div>{{ query.count }}/{{ projects.length }}</div>
       <input v-model="query.count" type="range" min="1" :max="projects.length" w-full>
     </div>
@@ -186,7 +203,8 @@ onMounted(() => {
 </template>
 
 <style>
-html {
+.dark,
+.dark body {
   color-scheme: dark;
   background: #050505;
 }
