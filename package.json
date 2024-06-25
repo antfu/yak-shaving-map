@@ -1,0 +1,40 @@
+{
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.4.0",
+  "scripts": {
+    "build": "nuxi build",
+    "dev": "nuxi dev",
+    "generate": "nuxi generate",
+    "prepare": "nuxi prepare",
+    "start": "node .output/server/index.mjs",
+    "start:generate": "npx serve .output/public",
+    "lint": "eslint .",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.21.1",
+    "@iconify-json/carbon": "^1.1.36",
+    "@iconify-json/twemoji": "^1.1.15",
+    "@nuxt/devtools": "^1.3.6",
+    "@nuxt/eslint": "^0.3.13",
+    "@nuxtjs/color-mode": "^3.4.2",
+    "@pinia/nuxt": "^0.5.1",
+    "@types/chroma-js": "^2.4.4",
+    "@unocss/eslint-config": "^0.61.0",
+    "@unocss/nuxt": "^0.61.0",
+    "@vueuse/nuxt": "^10.11.0",
+    "chroma-js": "^2.4.2",
+    "consola": "^3.2.3",
+    "eslint": "^9.5.0",
+    "eslint-plugin-format": "^0.1.2",
+    "nuxt": "^3.12.2",
+    "pinia": "^2.1.7",
+    "typescript": "^5.5.2",
+    "vue-tsc": "^2.0.22"
+  },
+  "dependencies": {
+    "vis-data": "^7.1.9",
+    "vis-network": "^9.1.9"
+  }
+}
