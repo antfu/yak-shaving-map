@@ -82,8 +82,15 @@ export const projects: ProjectNode[] = [
     name: 'iconify',
     display: 'Iconify',
     link: 'https://iconify.design/',
+    color: '#814',
     dashed: true,
     from: ['unplugin-icons'],
+  },
+  {
+    name: 'Iconify IntelliSense',
+    link: 'https://github.com/antfu/vscode-iconify',
+    color: '#814',
+    from: ['iconify'],
   },
   {
     name: 'unplugin-vue-components',
@@ -108,7 +115,6 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/antfu-collective/vite-plugin-inspect',
     color: '#454ce1',
     from: ['unplugin-vue-components'],
-    deps: ['nuxt-devtools'],
   },
   {
     name: 'vitesse',
@@ -117,6 +123,7 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/antfu/vitesse',
     color: '#895',
     from: ['icones', 'unplugin-vue-components', 'unplugin-auto-import', 'vite-pwa', 'unplugin-icons'],
+    deps: ['vueuse'],
   },
   {
     name: 'vitesse-webext',
@@ -125,10 +132,22 @@ export const projects: ProjectNode[] = [
     from: ['vitesse'],
   },
   {
+    name: 'webext-bridge',
+    link: 'https://github.com/serversideup/webext-bridge',
+    color: '#405',
+    from: ['vitesse-webext'],
+  },
+  {
     name: 'vitesse-nuxt3',
     link: 'https://github.com/antfu/vitesse-nuxt3',
     color: '#895',
     from: ['vitesse'],
+  },
+  {
+    name: 'vitesse-theme',
+    link: 'https://github.com/antfu/vscode-theme-vitesse',
+    color: '#895',
+    from: ['vitesse', 'vueuse'],
   },
   {
     name: 'antfu.me',
@@ -158,12 +177,18 @@ export const projects: ProjectNode[] = [
     color: '#2ae',
     shape: 'circle',
     from: ['vitesse'],
-    deps: ['windicss'],
+    deps: ['windicss', 'vueuse'],
   },
   {
     name: 'broz',
     link: 'https://github.com/antfu/broz',
-    color: '#123',
+    color: '#2ae',
+    from: ['slidev'],
+  },
+  {
+    name: 'drauu',
+    link: 'https://github.com/antfu/drauu',
+    color: '#2ae',
     from: ['slidev'],
   },
   {
@@ -193,21 +218,21 @@ export const projects: ProjectNode[] = [
   {
     name: 'vite-node',
     link: 'https://github.com/vitest-dev/vitest/tree/main/packages/vite-node',
-    color: '#454ce1',
-    from: ['nuxt'],
+    color: '#982',
+    from: ['nuxt', 'vite'],
   },
   {
     name: 'vitest',
     display: 'Vitest',
     shape: 'circle',
     link: 'https://github.com/vitest-dev/vitest',
-    color: '#493',
+    color: '#982',
     from: ['vite', 'vite-node'],
   },
   {
     name: 'birpc',
     link: 'https://github.com/antfu/birpc',
-    color: '#493',
+    color: '#982',
     from: ['vitest'],
   },
   {
@@ -215,7 +240,7 @@ export const projects: ProjectNode[] = [
     display: 'Nuxt DevTools',
     link: 'https://github.com/nuxt/devtools',
     color: '#00c58e',
-    from: ['nuxt'],
+    from: ['nuxt', 'vite-plugin-inspect'],
     deps: ['birpc'],
   },
   {
