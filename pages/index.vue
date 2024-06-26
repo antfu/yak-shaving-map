@@ -137,7 +137,6 @@ onMounted(() => {
       },
       interaction: {
         dragNodes: false,
-        dragView: false,
         selectable: false,
       },
     },
@@ -169,7 +168,6 @@ onMounted(() => {
         network.setOptions({
           interaction: {
             dragNodes: true,
-            dragView: true,
             selectable: true,
           },
         })
@@ -180,7 +178,6 @@ onMounted(() => {
       network.setOptions({
         interaction: {
           dragNodes: false,
-          dragView: false,
           selectable: false,
         },
       })
