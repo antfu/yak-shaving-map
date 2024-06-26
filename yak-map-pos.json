@@ -1,1 +1,190 @@
-{"breadsplit":{"x":-70,"y":-497},"i18n-ally":{"x":-118,"y":-414},"vueuse":{"x":6,"y":-421},"@vue/composition-api":{"x":-35,"y":-330},"vue-demi":{"x":130,"y":-331},"vue":{"x":-77,"y":-262},"vite":{"x":-154,"y":-173},"icones":{"x":-39,"y":-153},"unplugin-icons":{"x":127,"y":-106},"iconify":{"x":52,"y":6},"Iconify IntelliSense":{"x":5,"y":80},"unplugin-vue-components":{"x":133,"y":-196},"unplugin-auto-import":{"x":133,"y":-151},"vite-pwa":{"x":127,"y":-246},"vite-plugin-inspect":{"x":493,"y":-217},"vitesse":{"x":325,"y":-179},"vitesse-webext":{"x":296,"y":-338},"webext-bridge":{"x":352,"y":-406},"vitesse-nuxt3":{"x":263,"y":-272},"vitesse-theme":{"x":193,"y":-384},"antfu.me":{"x":406,"y":-299},"vite-ssg":{"x":515,"y":-306},"windicss":{"x":249,"y":19},"slidev":{"x":148,"y":68},"broz":{"x":142,"y":153},"drauu":{"x":65,"y":154},"unocss":{"x":243,"y":147},"nuxt":{"x":499,"y":-51},"unplugin":{"x":361,"y":-91},"vite-node":{"x":-21,"y":-50},"vitest":{"x":-132,"y":-54},"birpc":{"x":-143,"y":50},"nuxt-devtools":{"x":560,"y":-140},"learn.nuxt.com":{"x":626,"y":-28},"shiki":{"x":425,"y":51},"shiki-magic-move":{"x":434,"y":149},"shiki/monaco":{"x":604,"y":54},"twoslash":{"x":571,"y":124},"@antfu/eslint-config":{"x":864,"y":-248},"@eslint/config-inspector":{"x":867,"y":-367},"eslint-flat-config-utils":{"x":996,"y":-162},"eslint-typegen":{"x":969,"y":-313},"@nuxt/eslint":{"x":838,"y":-144},"eslint-stylistic":{"x":1058,"y":-250}}
+{
+  "breadsplit": {
+    "x": -70,
+    "y": -486
+  },
+  "i18n-ally": {
+    "x": -119,
+    "y": -417
+  },
+  "vueuse": {
+    "x": 6,
+    "y": -421
+  },
+  "@vue/composition-api": {
+    "x": -35,
+    "y": -330
+  },
+  "vue-demi": {
+    "x": 130,
+    "y": -331
+  },
+  "vue": {
+    "x": -77,
+    "y": -262
+  },
+  "vite": {
+    "x": -154,
+    "y": -173
+  },
+  "icones": {
+    "x": -39,
+    "y": -153
+  },
+  "unplugin-icons": {
+    "x": 127,
+    "y": -94
+  },
+  "iconify": {
+    "x": 73,
+    "y": 8
+  },
+  "Iconify IntelliSense": {
+    "x": -50,
+    "y": 78
+  },
+  "unplugin-vue-components": {
+    "x": 133,
+    "y": -191
+  },
+  "unplugin-auto-import": {
+    "x": 132,
+    "y": -142
+  },
+  "vite-pwa": {
+    "x": 127,
+    "y": -246
+  },
+  "vite-plugin-inspect": {
+    "x": 493,
+    "y": -217
+  },
+  "vitesse": {
+    "x": 325,
+    "y": -179
+  },
+  "vitesse-webext": {
+    "x": 296,
+    "y": -338
+  },
+  "webext-bridge": {
+    "x": 352,
+    "y": -406
+  },
+  "vitesse-nuxt3": {
+    "x": 263,
+    "y": -272
+  },
+  "vitesse-theme": {
+    "x": 193,
+    "y": -384
+  },
+  "antfu.me": {
+    "x": 415,
+    "y": -304
+  },
+  "vite-ssg": {
+    "x": 529,
+    "y": -300
+  },
+  "windicss": {
+    "x": 249,
+    "y": 19
+  },
+  "slidev": {
+    "x": 148,
+    "y": 68
+  },
+  "broz": {
+    "x": 177,
+    "y": 152
+  },
+  "drauu": {
+    "x": 114,
+    "y": 151
+  },
+  "unocss": {
+    "x": 241,
+    "y": 202
+  },
+  "nuxt": {
+    "x": 499,
+    "y": -51
+  },
+  "unplugin": {
+    "x": 352,
+    "y": -49
+  },
+  "vite-node": {
+    "x": -21,
+    "y": -50
+  },
+  "vitest": {
+    "x": -149,
+    "y": -53
+  },
+  "birpc": {
+    "x": -57,
+    "y": 14
+  },
+  "nuxt-devtools": {
+    "x": 582,
+    "y": -151
+  },
+  "learn.nuxt.com": {
+    "x": 609,
+    "y": -6
+  },
+  "shiki": {
+    "x": 425,
+    "y": 51
+  },
+  "shiki-magic-move": {
+    "x": 384,
+    "y": 125
+  },
+  "shiki/monaco": {
+    "x": 560,
+    "y": 54
+  },
+  "twoslash": {
+    "x": 571,
+    "y": 124
+  },
+  "@antfu/eslint-config": {
+    "x": 715,
+    "y": -238
+  },
+  "@eslint/config-inspector": {
+    "x": 719,
+    "y": -321
+  },
+  "eslint-flat-config-utils": {
+    "x": 887,
+    "y": -185
+  },
+  "eslint-typegen": {
+    "x": 885,
+    "y": -296
+  },
+  "@nuxt/eslint": {
+    "x": 718,
+    "y": -130
+  },
+  "eslint-stylistic": {
+    "x": 913,
+    "y": -240
+  },
+  "unimport": {
+    "x": 352,
+    "y": -96
+  },
+  "magicast": {
+    "x": 459,
+    "y": -151
+  },
+  "css-icons": {
+    "x": 45,
+    "y": 201
+  }
+}

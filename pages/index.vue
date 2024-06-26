@@ -12,6 +12,14 @@ function toggleDark() {
 }
 
 const container = ref<HTMLDivElement>()
+const query = useUrlSearchParams('history', {
+  initialValue: {
+    count: 1,
+    mode: 'all' as 'all' | 'steps',
+  },
+  removeFalsyValues: true,
+  removeNullishValues: true,
+})
 
 const backgroundColor = computed(() => isDark.value ? '#050505' : '#ffff')
 const luminance = computed(() => isDark.value ? 0.7 : 0.6)
@@ -78,6 +86,14 @@ function toEdges(project: ProjectNode) {
   ]
 }
 
+function next() {
+  query.count = Math.min(+query.count + 1, projects.length)
+}
+
+function prev() {
+  query.count = Math.max(+query.count - 1, 1)
+}
+
 for (const [id, pos] of Object.entries(poisitions) as [string, { x: number, y: number }][]) {
   const project = projects.find(p => p.name === id)
   if (!project || !pos)
@@ -85,7 +101,8 @@ for (const [id, pos] of Object.entries(poisitions) as [string, { x: number, y: n
   Object.assign(project, pos)
 }
 
-const query = useUrlSearchParams('history', { initialValue: { count: 1 } })
+onKeyStroke('ArrowRight', () => next())
+onKeyStroke('ArrowLeft', () => prev())
 
 onMounted(() => {
   const nodes = new DataSet(projects.slice(0, query.count).map(project => toNode(project)))
@@ -122,7 +139,6 @@ onMounted(() => {
         dragNodes: false,
         dragView: false,
         selectable: false,
-        zoomView: false,
       },
     },
   )
@@ -136,18 +152,18 @@ onMounted(() => {
     network.on('dragEnd', () => save())
   }
 
-  network.focus(projects[0].name, { scale: 2 })
-
   let loop = 0
   watchEffect(() => {
-    const visible = projects.slice(0, query.count)
-    nodes.update(visible.map((project, idx) => toNode(project, idx === query.count - 1)))
-    edges.update(visible.slice(0, query.count).flatMap(project => toEdges(project)))
+    const visible = query.mode === 'steps'
+      ? projects.slice(0, query.count)
+      : projects
+    nodes.update(visible.map((project, idx) => toNode(project, query.mode === 'steps' && idx === query.count - 1)))
+    edges.update(visible.flatMap(project => toEdges(project)))
 
     nodes.remove(nodes.getIds().filter(id => !visible.some(p => p.name === id)))
     edges.remove(edges.getIds().filter(id => !visible.some(p => (id as string).startsWith(`${p.name}|`))))
 
-    if (query.count >= projects.length) {
+    if (query.count >= projects.length || query.mode === 'all') {
       network.fit({ animation: !!loop })
       if (import.meta.hot) {
         network.setOptions({
@@ -155,19 +171,17 @@ onMounted(() => {
             dragNodes: true,
             dragView: true,
             selectable: true,
-            zoomView: true,
           },
         })
       }
     }
     else {
-      network.focus(projects[query.count - 1].name, { scale: 2, animation: !!loop })
+      network.focus(projects[query.count - 1].name, { scale: 1.5, animation: !!loop })
       network.setOptions({
         interaction: {
           dragNodes: false,
           dragView: false,
           selectable: false,
-          zoomView: false,
         },
       })
     }
@@ -190,15 +204,30 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div flex="~ items-center gap-3" fixed right-4 top-4 rounded-1rem p2 backdrop-blur-md>
+    <div flex="~ items-center gap-0.5" fixed right-4 top-4 z-100 rounded-1rem p2 text-gray backdrop-blur-md>
+      <button v-if="query.mode === 'steps'" rounded-xl bg-gray:5 p3 pr4 hover:bg-gray:10 flex="~ items-center gap-2" @click="query.mode = 'all'">
+        <div i-ph-graph-duotone />
+        Show full graph
+      </button>
+      <button v-else rounded-xl bg-gray:5 p3 pr4 hover:bg-gray:10 flex="~ items-center gap-2" @click="query.mode = 'steps';query.count = 1">
+        <div i-ph-play-duotone />
+        Show steps
+      </button>
       <button rounded-xl p3 hover:bg-gray:10 @click="toggleDark()">
         <div i-ph-sun-duotone dark:i-ph-moon-duotone />
       </button>
     </div>
-    <div fixed bottom-0 left-0 right-0 p4 flex="~ col items-center gap-3">
-      <div>{{ query.count }}/{{ projects.length }}</div>
-      <input v-model="query.count" type="range" min="1" :max="projects.length" w-full>
+    <div v-if="query.mode === 'steps'" fixed bottom-0 left-0 right-0 z-100>
+      <div h-1px :style="{ width: `${query.count / projects.length * 100}%` }" bg-teal />
     </div>
+    <button
+      w="1/4" fixed bottom-0 left-0 top-0
+      @click="prev()"
+    />
+    <button
+      w="1/4" fixed bottom-0 right-0 top-0
+      @click="next()"
+    />
   </div>
 </template>
 
@@ -207,5 +236,10 @@ onMounted(() => {
 .dark body {
   color-scheme: dark;
   background: #050505;
+}
+
+div,
+button {
+  outline: none !important;
 }
 </style>

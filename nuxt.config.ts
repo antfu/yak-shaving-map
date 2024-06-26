@@ -16,6 +16,16 @@ export default defineNuxtConfig({
     typedPages: true,
   },
 
+  app: {
+    head: {
+      title: 'Anthony Fu\'s Yak Map',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+    },
+  },
+
   css: [
     '@unocss/reset/tailwind.css',
   ],
@@ -43,7 +53,7 @@ export default defineNuxtConfig({
             socket.on('message', (data) => {
               const payload = JSON.parse(data.toString()) as any
               if (payload.type === 'custom' && payload.event === 'yak-map-pos') {
-                fs.writeFileSync('yak-map-pos.json', JSON.stringify(payload.data))
+                fs.writeFileSync('yak-map-pos.json', `${JSON.stringify(payload.data, null, 2)}\n`)
               }
             })
           })

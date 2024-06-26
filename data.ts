@@ -73,6 +73,24 @@ export const projects: ProjectNode[] = [
     from: ['vite', 'vue'],
   },
   {
+    name: 'vite-pwa',
+    link: 'https://github.com/vite-pwa',
+    color: '#750',
+    from: ['icones'],
+  },
+  {
+    name: 'unplugin-vue-components',
+    link: 'https://github.com/unplugin/unplugin-vue-components',
+    color: '#525',
+    from: ['icones'],
+  },
+  {
+    name: 'unplugin-auto-import',
+    link: 'https://github.com/unplugin/unplugin-auto-import',
+    color: '#525',
+    from: ['icones'],
+  },
+  {
     name: 'unplugin-icons',
     link: 'https://github.com/unplugin/unplugin-icons',
     color: '#525',
@@ -93,24 +111,6 @@ export const projects: ProjectNode[] = [
     from: ['iconify'],
   },
   {
-    name: 'unplugin-vue-components',
-    link: 'https://github.com/unplugin/unplugin-vue-components',
-    color: '#525',
-    from: ['icones'],
-  },
-  {
-    name: 'unplugin-auto-import',
-    link: 'https://github.com/unplugin/unplugin-auto-import',
-    color: '#525',
-    from: ['icones'],
-  },
-  {
-    name: 'vite-pwa',
-    link: 'https://github.com/vite-pwa',
-    color: '#750',
-    from: ['icones'],
-  },
-  {
     name: 'vite-plugin-inspect',
     link: 'https://github.com/antfu-collective/vite-plugin-inspect',
     color: '#454ce1',
@@ -124,6 +124,12 @@ export const projects: ProjectNode[] = [
     color: '#895',
     from: ['icones', 'unplugin-vue-components', 'unplugin-auto-import', 'vite-pwa', 'unplugin-icons'],
     deps: ['vueuse'],
+  },
+  {
+    name: 'vitesse-theme',
+    link: 'https://github.com/antfu/vscode-theme-vitesse',
+    color: '#895',
+    from: ['vitesse', 'vueuse'],
   },
   {
     name: 'vitesse-webext',
@@ -142,12 +148,6 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/antfu/vitesse-nuxt3',
     color: '#895',
     from: ['vitesse'],
-  },
-  {
-    name: 'vitesse-theme',
-    link: 'https://github.com/antfu/vscode-theme-vitesse',
-    color: '#895',
-    from: ['vitesse', 'vueuse'],
   },
   {
     name: 'antfu.me',
@@ -195,13 +195,21 @@ export const projects: ProjectNode[] = [
     name: 'unocss',
     display: 'UnoCSS',
     link: 'https://github.com/unocss/unocss',
-    color: '#123',
+    color: '#304',
     from: ['slidev', 'windicss'],
     deps: ['vitesse'],
   },
   {
+    name: 'css-icons',
+    display: 'Pure CSS Icons',
+    link: 'https://unocss.dev/presets/icons',
+    color: '#304',
+    from: ['unocss', 'iconify'],
+  },
+  {
     name: 'nuxt',
     display: 'Nuxt',
+    shape: 'circle',
     link: 'https://github.com/nuxt/nuxt',
     dashed: true,
     color: '#00c58e',
@@ -209,16 +217,21 @@ export const projects: ProjectNode[] = [
   },
   {
     name: 'unplugin',
-    display: 'Unplugin',
     link: 'https://github.com/unjs/unplugin',
-    color: '#525',
+    color: '#982',
     from: ['nuxt'],
     deps: ['unplugin-icons', 'unplugin-auto-import', 'unplugin-vue-components'],
   },
   {
+    name: 'unimport',
+    link: 'https://github.com/unjs/unimport',
+    color: '#982',
+    from: ['nuxt', 'unplugin-auto-import'],
+  },
+  {
     name: 'vite-node',
     link: 'https://github.com/vitest-dev/vitest/tree/main/packages/vite-node',
-    color: '#982',
+    color: '#bd3',
     from: ['nuxt', 'vite'],
   },
   {
@@ -226,13 +239,13 @@ export const projects: ProjectNode[] = [
     display: 'Vitest',
     shape: 'circle',
     link: 'https://github.com/vitest-dev/vitest',
-    color: '#982',
+    color: '#bd3',
     from: ['vite', 'vite-node'],
   },
   {
     name: 'birpc',
     link: 'https://github.com/antfu/birpc',
-    color: '#982',
+    color: '#bd3',
     from: ['vitest'],
   },
   {
@@ -242,6 +255,13 @@ export const projects: ProjectNode[] = [
     color: '#00c58e',
     from: ['nuxt', 'vite-plugin-inspect'],
     deps: ['birpc'],
+  },
+  {
+    name: 'magicast',
+    link: 'https://github.com/unjs/magicast',
+    color: '#982',
+    from: ['nuxt-devtools'],
+    deps: ['nuxt'],
   },
   {
     name: 'learn.nuxt.com',
@@ -284,6 +304,13 @@ export const projects: ProjectNode[] = [
     color: '#53f',
   },
   {
+    name: 'eslint-stylistic',
+    display: 'ESLint Stylistic',
+    link: 'https://github.com/eslint-stylistic/eslint-stylistic',
+    color: '#59f',
+    from: ['@antfu/eslint-config'],
+  },
+  {
     name: '@eslint/config-inspector',
     link: 'https://github.com/eslint/config-inspector',
     color: '#53f',
@@ -308,12 +335,5 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/nuxt/eslint',
     color: '#00c58e',
     from: ['@antfu/eslint-config', 'nuxt'],
-  },
-  {
-    name: 'eslint-stylistic',
-    display: 'ESLint Stylistic',
-    link: 'https://github.com/eslint-stylistic/eslint-stylistic',
-    color: '#59f',
-    from: ['@antfu/eslint-config'],
   },
 ]
