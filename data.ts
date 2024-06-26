@@ -156,6 +156,13 @@ export const projects: ProjectNode[] = [
     from: ['vitesse'],
   },
   {
+    name: 'unplugin-vue-markdown',
+    link: 'https://github.com/unplugin/unplugin-vue-markdown',
+    color: '#459',
+    from: ['antfu.me'],
+    deps: ['vitesse'],
+  },
+  {
     name: 'vite-ssg',
     link: 'https://github.com/antfu/vite-ssg',
     color: '#459',
