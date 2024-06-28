@@ -12,183 +12,195 @@
     "y": -421
   },
   "@vue/composition-api": {
-    "x": -35,
-    "y": -330
+    "x": -94,
+    "y": -342
   },
   "vue-demi": {
-    "x": 130,
-    "y": -331
+    "x": 73,
+    "y": -341
   },
   "vue": {
-    "x": -77,
-    "y": -262
+    "x": -87,
+    "y": -251
   },
   "vite": {
-    "x": -154,
-    "y": -173
+    "x": -151,
+    "y": -154
   },
   "icones": {
-    "x": -39,
-    "y": -153
+    "x": -34,
+    "y": -147
   },
   "unplugin-icons": {
-    "x": 127,
+    "x": 118,
     "y": -94
   },
   "iconify": {
-    "x": 73,
+    "x": 29,
     "y": 8
   },
   "Iconify IntelliSense": {
-    "x": -50,
-    "y": 78
+    "x": -81,
+    "y": 73
   },
   "unplugin-vue-components": {
-    "x": 133,
-    "y": -191
+    "x": 154,
+    "y": -182
   },
   "unplugin-auto-import": {
-    "x": 132,
-    "y": -142
+    "x": 139,
+    "y": -138
   },
   "vite-pwa": {
-    "x": 127,
-    "y": -246
+    "x": 103,
+    "y": -229
   },
   "vite-plugin-inspect": {
-    "x": 493,
-    "y": -217
+    "x": 523,
+    "y": -212
   },
   "vitesse": {
-    "x": 325,
-    "y": -179
+    "x": 343,
+    "y": -201
   },
   "vitesse-webext": {
-    "x": 296,
-    "y": -338
+    "x": 344,
+    "y": -311
   },
   "webext-bridge": {
-    "x": 352,
-    "y": -406
+    "x": 343,
+    "y": -379
   },
   "vitesse-nuxt3": {
-    "x": 263,
-    "y": -272
-  },
-  "vitesse-theme": {
-    "x": 193,
-    "y": -384
-  },
-  "antfu.me": {
-    "x": 415,
-    "y": -304
-  },
-  "vite-ssg": {
-    "x": 549,
-    "y": -304
-  },
-  "windicss": {
-    "x": 249,
-    "y": 19
-  },
-  "slidev": {
-    "x": 148,
-    "y": 68
-  },
-  "broz": {
-    "x": 177,
-    "y": 152
-  },
-  "drauu": {
-    "x": 114,
-    "y": 151
-  },
-  "unocss": {
-    "x": 241,
-    "y": 202
-  },
-  "nuxt": {
-    "x": 499,
-    "y": -51
-  },
-  "unplugin": {
-    "x": 352,
-    "y": -49
-  },
-  "vite-node": {
-    "x": -21,
-    "y": -50
-  },
-  "vitest": {
-    "x": -149,
-    "y": -53
-  },
-  "birpc": {
-    "x": -57,
-    "y": 14
-  },
-  "nuxt-devtools": {
-    "x": 582,
-    "y": -151
-  },
-  "learn.nuxt.com": {
-    "x": 609,
-    "y": -6
-  },
-  "shiki": {
-    "x": 425,
-    "y": 51
-  },
-  "shiki-magic-move": {
-    "x": 384,
-    "y": 125
-  },
-  "shiki/monaco": {
-    "x": 560,
-    "y": 54
-  },
-  "twoslash": {
-    "x": 571,
-    "y": 124
-  },
-  "@antfu/eslint-config": {
-    "x": 715,
-    "y": -238
-  },
-  "@eslint/config-inspector": {
-    "x": 719,
-    "y": -321
-  },
-  "eslint-flat-config-utils": {
-    "x": 887,
-    "y": -185
-  },
-  "eslint-typegen": {
-    "x": 885,
-    "y": -296
-  },
-  "@nuxt/eslint": {
-    "x": 718,
+    "x": 455,
     "y": -130
   },
+  "vitesse-theme": {
+    "x": 200,
+    "y": -342
+  },
+  "antfu.me": {
+    "x": 470,
+    "y": -302
+  },
+  "vite-ssg": {
+    "x": 585,
+    "y": -300
+  },
+  "windicss": {
+    "x": 253,
+    "y": 32
+  },
+  "slidev": {
+    "x": 154,
+    "y": 4
+  },
+  "broz": {
+    "x": 185,
+    "y": 103
+  },
+  "drauu": {
+    "x": 116,
+    "y": 102
+  },
+  "unocss": {
+    "x": 262,
+    "y": 163
+  },
+  "nuxt": {
+    "x": 590,
+    "y": -76
+  },
+  "unplugin": {
+    "x": 389,
+    "y": -30
+  },
+  "vite-node": {
+    "x": -95,
+    "y": -49
+  },
+  "vitest": {
+    "x": -187,
+    "y": -50
+  },
+  "birpc": {
+    "x": -103,
+    "y": 2
+  },
+  "nuxt-devtools": {
+    "x": 617,
+    "y": -145
+  },
+  "learn.nuxt.com": {
+    "x": 614,
+    "y": 4
+  },
+  "shiki": {
+    "x": 427,
+    "y": 88
+  },
+  "shiki-magic-move": {
+    "x": 397,
+    "y": 164
+  },
+  "shiki/monaco": {
+    "x": 556,
+    "y": 86
+  },
+  "twoslash": {
+    "x": 535,
+    "y": 145
+  },
+  "@antfu/eslint-config": {
+    "x": 788,
+    "y": -237
+  },
+  "@eslint/config-inspector": {
+    "x": 773,
+    "y": -344
+  },
+  "eslint-flat-config-utils": {
+    "x": 855,
+    "y": -287
+  },
+  "eslint-typegen": {
+    "x": 704,
+    "y": -289
+  },
+  "@nuxt/eslint": {
+    "x": 705,
+    "y": -73
+  },
   "eslint-stylistic": {
-    "x": 913,
-    "y": -240
+    "x": 846,
+    "y": -180
   },
   "unimport": {
-    "x": 352,
-    "y": -96
+    "x": 390,
+    "y": -76
   },
   "magicast": {
-    "x": 459,
-    "y": -151
+    "x": 648,
+    "y": -208
   },
   "css-icons": {
-    "x": 45,
-    "y": 201
+    "x": 59,
+    "y": 160
   },
   "unplugin-vue-markdown": {
-    "x": 514,
-    "y": -364
+    "x": 520,
+    "y": -363
+  },
+  "v-dollar": {
+    "x": -197,
+    "y": -237
+  },
+  "vue-reactivity": {
+    "x": 32,
+    "y": -276
+  },
+  "reactivue": {
+    "x": -196,
+    "y": -282
   }
 }

@@ -16,6 +16,7 @@ const query = useUrlSearchParams('history', {
   initialValue: {
     count: 1,
     mode: 'all' as 'all' | 'steps',
+    embedded: false,
   },
   removeFalsyValues: true,
   removeNullishValues: true,
@@ -49,6 +50,7 @@ function toNode(project: ProjectNode, focus = false) {
       },
     },
     borderWidth: focus ? 4 : 1,
+    borderWidthSelected: focus ? 4 : 1,
   }
 }
 
@@ -101,8 +103,11 @@ for (const [id, pos] of Object.entries(poisitions) as [string, { x: number, y: n
   Object.assign(project, pos)
 }
 
+const isEditing = ref(false)
+
 onKeyStroke('ArrowRight', () => next())
 onKeyStroke('ArrowLeft', () => prev())
+onKeyStroke('Space', () => prev())
 
 onMounted(() => {
   const nodes = new DataSet(projects.slice(0, query.count).map(project => toNode(project)))
@@ -117,6 +122,7 @@ onMounted(() => {
     },
     {
       nodes: {
+        labelHighlightBold: false,
         shape: 'box',
         margin: {
           top: 10,
@@ -137,19 +143,38 @@ onMounted(() => {
       },
       interaction: {
         dragNodes: false,
-        selectable: false,
       },
     },
   )
 
   if (import.meta.hot) {
     function save() {
-      import.meta.hot?.send('yak-map-pos', Object.assign({}, poisitions, network.getPositions()))
+      if (isEditing.value)
+        import.meta.hot!.send('yak-map-pos', Object.assign({}, poisitions, network.getPositions()))
     }
 
     network.on('stabilized', () => save())
     network.on('dragEnd', () => save())
   }
+
+  network.on('click', (arg: { nodes: string[], pointer: { canvas: { x: number, y: number } } }) => {
+    if (isEditing.value)
+      return
+
+    // Click on empty space
+    if (!arg.nodes?.length) {
+      if (arg.pointer.canvas.x < -30)
+        prev()
+      else if (arg.pointer.canvas.x > 30)
+        next()
+    }
+    // Click on a node, open the link
+    else if (arg.nodes.length === 1) {
+      const project = projects.find(p => p.name === arg.nodes[0])
+      if (project?.link)
+        window.open(project.link, '_blank')
+    }
+  })
 
   let loop = 0
   watchEffect(() => {
@@ -164,21 +189,36 @@ onMounted(() => {
 
     if (query.count >= projects.length || query.mode === 'all') {
       network.fit({ animation: !!loop })
-      if (import.meta.hot) {
+
+      if (import.meta.hot && query.mode === 'all') {
+        isEditing.value = true
         network.setOptions({
           interaction: {
             dragNodes: true,
-            selectable: true,
           },
         })
       }
+      else {
+        isEditing.value = false
+      }
     }
     else {
-      network.focus(projects[query.count - 1].name, { scale: 1.5, animation: !!loop })
+      isEditing.value = false
+      network.focus(
+        projects[query.count - 1].name,
+        {
+          scale: 1.5,
+          animation: loop
+            ? {
+                duration: 1400,
+                easingFunction: 'easeInOutQuad',
+              }
+            : false,
+        },
+      )
       network.setOptions({
         interaction: {
           dragNodes: false,
-          selectable: false,
         },
       })
     }
@@ -194,19 +234,19 @@ onMounted(() => {
       <div text-5xl>
         🐃
       </div>
-      <div>
+      <div flex="~ col">
         <a href="https://antfu.me" text-sm op50 hover:underline target="_blank">Anthony Fu's</a>
-        <div text-2xl>
+        <a text-2xl href="https://github.com/antfu/yak-shaving-map" target="_blank" hover:underline>
           Yak Map
-        </div>
+        </a>
       </div>
     </div>
-    <div flex="~ items-center gap-0.5" fixed right-4 top-4 z-100 rounded-1rem p2 text-gray backdrop-blur-md>
+    <div v-if="!query.embedded" flex="~ items-center gap-0.5" fixed right-4 top-4 rounded-1rem p2 text-gray backdrop-blur-md>
       <button rounded-xl p3 hover:bg-gray:10 @click="toggleDark()">
         <div i-ph-sun-duotone dark:i-ph-moon-duotone />
       </button>
     </div>
-    <div flex="~ items-center gap-0.5" fixed bottom-4 right-4 z-100 rounded-1rem p2 text-gray backdrop-blur-md>
+    <div v-if="!query.embedded" flex="~ items-center gap-0.5" fixed bottom-4 right-4 z-100 rounded-1rem p2 text-gray backdrop-blur-md>
       <template v-if="query.mode === 'steps'">
         <button rounded-xl p3 hover:bg-gray:10 @click="prev()">
           <div i-ph-arrow-left-duotone />
@@ -228,14 +268,6 @@ onMounted(() => {
     <div v-if="query.mode === 'steps'" fixed bottom-0 left-0 right-0 z-100>
       <div h-1px :style="{ width: `${query.count / projects.length * 100}%` }" bg-teal />
     </div>
-    <button
-      w="1/3" fixed bottom-0 left-0 top-0
-      @click="prev()"
-    />
-    <button
-      w="1/3" fixed bottom-0 right-0 top-0
-      @click="next()"
-    />
   </div>
 </template>
 
