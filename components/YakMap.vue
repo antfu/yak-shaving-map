@@ -165,10 +165,22 @@ onMounted(() => {
     }
   })
 
+  function changeCursor(cursorStyle: 'pointer' | 'default') {
+    if (container.value)
+      container.value.style.cursor = cursorStyle
+  }
+  network.on('hoverNode', () => {
+    changeCursor('pointer')
+  })
+  network.on('blurNode', () => {
+    changeCursor('default')
+  })
+
   watchEffect(() => {
     network.setOptions({
       interaction: {
         dragNodes: !!props.isEditing,
+        hover: true,
       },
     })
   })
