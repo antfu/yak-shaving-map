@@ -15,6 +15,8 @@ const props = withDefaults(
     focusScale?: number
   }>(),
   {
+    isEditing: false,
+    isDark: true,
     mode: 'all',
     focusScale: 1.5,
   },
@@ -166,7 +168,7 @@ onMounted(() => {
   watchEffect(() => {
     network.setOptions({
       interaction: {
-        dragNodes: props.isEditing,
+        dragNodes: !!props.isEditing,
       },
     })
   })
