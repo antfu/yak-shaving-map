@@ -16,6 +16,10 @@ export default defineNuxtConfig({
     typedPages: true,
   },
 
+  imports: {
+    autoImport: false,
+  },
+
   app: {
     head: {
       title: 'Anthony Fu\'s Yak Map',

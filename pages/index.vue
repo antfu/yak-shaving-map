@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onKeyStroke, useDark, useUrlSearchParams } from '@vueuse/core'
+import { computed, shallowRef } from 'vue'
 import YakMap from '../components/YakMap.vue'
 import { projects } from '../data'
 
