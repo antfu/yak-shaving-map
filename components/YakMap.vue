@@ -13,6 +13,7 @@ const props = withDefaults(
     mode?: 'steps' | 'all'
     onEdit?: (data: any) => void
     focusScale?: number
+    backgroundColor?: string
   }>(),
   {
     isEditing: false,
@@ -26,12 +27,17 @@ const clicks = defineModel('clicks', { default: 1, type: Number })
 
 const container = ref<HTMLDivElement>()
 
-const backgroundColor = computed(() => props.isDark ? '#050505' : '#ffff')
+const backgroundColor = computed(() => props.backgroundColor || (props.isDark ? '#050505' : '#ffff'))
 const luminance = computed(() => props.isDark ? 0.7 : 0.6)
 
 function toNode(project: ProjectNode, focus = false) {
   const color = chroma(project.color || '#888')
   const [_l, c, h] = color.oklch()
+
+  const getColor = (opacity = 1) => chroma
+    .oklch(luminance.value, c, h)
+    .mix(backgroundColor.value, 1 - opacity)
+    .hex()
 
   return {
     id: project.name,
@@ -43,18 +49,22 @@ function toNode(project: ProjectNode, focus = false) {
         }
       : {},
     font: {
-      color: chroma.oklch(luminance.value, c, h).hex(),
+      color: getColor(),
     },
     color: {
-      border: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, project.dashed ? 0.8 : 0.5).hex(),
-      background: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, project.dashed ? 0.96 : 0.95).hex(),
+      border: getColor(project.dashed ? 0.2 : 0.5),
+      background: getColor(project.dashed ? 0.03 : 0.05),
       highlight: {
-        border: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, project.dashed ? 0.8 : 0.5).hex(),
-        background: chroma.oklch(luminance.value, c, h).mix(backgroundColor.value, 0.9).hex(),
+        border: getColor(project.dashed ? 0.2 : 0.5),
+        background: getColor(0.1),
+      },
+      hover: {
+        border: getColor(project.dashed ? 0.2 : 0.5),
+        background: getColor(0.07),
       },
     },
     borderWidth: focus ? 4 : 1,
-    borderWidthSelected: focus ? 4 : 1,
+    borderWidthSelected: focus ? 4 : 2,
   }
 }
 
@@ -128,6 +138,8 @@ onMounted(() => {
           type: 'discrete',
           roundness: 0.5,
         },
+        width: 1,
+        hoverWidth: 0,
       },
       physics: {
         enabled: false,
@@ -195,12 +207,13 @@ onMounted(() => {
     edges.remove(edges.getIds().filter(id => !visible.some(p => (id as string).startsWith(`${p.name}|`))))
 
     if (+clicks.value >= projects.length || props.mode === 'all') {
-      network.fit({ animation: initiated
-        ? {
-            duration: 2000,
-            easingFunction: 'easeInOutQuad',
-          }
-        : undefined,
+      network.fit({
+        animation: initiated
+          ? {
+              duration: 2000,
+              easingFunction: 'easeInOutQuad',
+            }
+          : undefined,
       })
     }
     else {
