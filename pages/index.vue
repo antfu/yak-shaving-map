@@ -107,7 +107,7 @@ const isEditing = ref(false)
 
 onKeyStroke('ArrowRight', () => next())
 onKeyStroke('ArrowLeft', () => prev())
-onKeyStroke('Space', () => prev())
+onKeyStroke(' ', () => next())
 
 onMounted(() => {
   const nodes = new DataSet(projects.slice(0, query.count).map(project => toNode(project)))
