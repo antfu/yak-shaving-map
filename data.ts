@@ -1,4 +1,5 @@
 import type { Node } from 'vis-network'
+import poisitions from './yak-map-pos.json'
 
 export interface ProjectNode extends Partial<Node> {
   name: string
@@ -372,3 +373,12 @@ export const projects: ProjectNode[] = [
     from: ['@antfu/eslint-config', 'nuxt'],
   },
 ]
+
+for (const [id, pos] of Object.entries(poisitions) as [string, { x: number, y: number }][]) {
+  const project = projects.find(p => p.name === id)
+  if (!project || !pos)
+    continue
+  Object.assign(project, pos)
+}
+
+export { poisitions }
