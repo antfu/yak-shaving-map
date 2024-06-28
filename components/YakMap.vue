@@ -101,8 +101,8 @@ defineExpose({
 })
 
 onMounted(() => {
-  const nodes = new DataSet(projects.slice(0, clicks.value).map(project => toNode(project)))
-  const edges = new DataSet(projects.slice(0, clicks.value).flatMap(project => toEdges(project)))
+  const nodes = new DataSet(projects.slice(0, +clicks.value).map(project => toNode(project)))
+  const edges = new DataSet(projects.slice(0, +clicks.value).flatMap(project => toEdges(project)))
 
   // create a network
   const network = new Network(
@@ -176,15 +176,15 @@ onMounted(() => {
   let initiated = 0
   watchEffect(() => {
     const visible = props.mode === 'steps'
-      ? projects.slice(0, clicks.value)
+      ? projects.slice(0, +clicks.value)
       : projects
-    nodes.update(visible.map((project, idx) => toNode(project, props.mode === 'steps' && idx === clicks.value - 1)))
+    nodes.update(visible.map((project, idx) => toNode(project, props.mode === 'steps' && idx === +clicks.value - 1)))
     edges.update(visible.flatMap(project => toEdges(project)))
 
     nodes.remove(nodes.getIds().filter(id => !visible.some(p => p.name === id)))
     edges.remove(edges.getIds().filter(id => !visible.some(p => (id as string).startsWith(`${p.name}|`))))
 
-    if (clicks.value >= projects.length || props.mode === 'all') {
+    if (+clicks.value >= projects.length || props.mode === 'all') {
       network.fit({ animation: initiated
         ? {
             duration: 2000,
@@ -194,22 +194,24 @@ onMounted(() => {
       })
     }
     else {
-      const node = projects[clicks.value - 1]
-      const viewPos = network.getViewPosition()
-      const distance = Math.sqrt((viewPos.x - node.x!) ** 2 + (viewPos.y - node.y!) ** 2)
-      if (distance > 200 || !initiated) {
-        network.focus(
-          node.name,
-          {
-            scale: props.focusScale,
-            animation: initiated
-              ? {
-                  duration: 1000 + distance * 2,
-                  easingFunction: 'easeInOutQuad',
-                }
-              : false,
-          },
-        )
+      const node = projects[+clicks.value - 1]
+      if (node) {
+        const viewPos = network.getViewPosition()
+        const distance = Math.sqrt((viewPos.x - node.x!) ** 2 + (viewPos.y - node.y!) ** 2)
+        if (distance > 200 || !initiated) {
+          network.focus(
+            node.name,
+            {
+              scale: props.focusScale,
+              animation: initiated
+                ? {
+                    duration: 1000 + distance * 2,
+                    easingFunction: 'easeInOutQuad',
+                  }
+                : false,
+            },
+          )
+        }
       }
     }
     initiated += 1
