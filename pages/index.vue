@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DataSet } from 'vis-data'
-import { Network } from 'vis-network'
+import { Network, type Node } from 'vis-network'
 import chroma from 'chroma-js'
 import { type ProjectNode, projects } from '~/data'
 import poisitions from '~/yak-map-pos.json'
@@ -204,18 +204,23 @@ onMounted(() => {
     }
     else {
       isEditing.value = false
-      network.focus(
-        projects[query.count - 1].name,
-        {
-          scale: 1.5,
-          animation: loop
-            ? {
-                duration: 1400,
-                easingFunction: 'easeInOutQuad',
-              }
-            : false,
-        },
-      )
+      const node = projects[query.count - 1]
+      const viewPos = network.getViewPosition()
+      const distance = Math.sqrt((viewPos.x - node.x!) ** 2 + (viewPos.y - node.y!) ** 2)
+      if (distance > 150) {
+        network.focus(
+          node.name,
+          {
+            scale: 1.25,
+            animation: loop
+              ? {
+                  duration: 1000 + distance * 2,
+                  easingFunction: 'easeInOutQuad',
+                }
+              : false,
+          },
+        )
+      }
       network.setOptions({
         interaction: {
           dragNodes: false,
