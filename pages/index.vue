@@ -37,7 +37,7 @@ function next() {
 }
 
 function prev() {
-  map.value?.next()
+  map.value?.prev()
 }
 </script>
 

@@ -198,7 +198,7 @@ onMounted(() => {
       if (node) {
         const viewPos = network.getViewPosition()
         const distance = Math.sqrt((viewPos.x - node.x!) ** 2 + (viewPos.y - node.y!) ** 2)
-        if (distance > 200 || !initiated) {
+        if (distance > 200 || !initiated || +clicks.value === 1) {
           network.focus(
             node.name,
             {
