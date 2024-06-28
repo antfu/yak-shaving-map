@@ -176,7 +176,7 @@ onMounted(() => {
     }
   })
 
-  let loop = 0
+  let initiated = 0
   watchEffect(() => {
     const visible = query.mode === 'steps'
       ? projects.slice(0, query.count)
@@ -188,7 +188,7 @@ onMounted(() => {
     edges.remove(edges.getIds().filter(id => !visible.some(p => (id as string).startsWith(`${p.name}|`))))
 
     if (query.count >= projects.length || query.mode === 'all') {
-      network.fit({ animation: !!loop })
+      network.fit({ animation: !!initiated })
 
       if (import.meta.hot && query.mode === 'all') {
         isEditing.value = true
@@ -207,12 +207,12 @@ onMounted(() => {
       const node = projects[query.count - 1]
       const viewPos = network.getViewPosition()
       const distance = Math.sqrt((viewPos.x - node.x!) ** 2 + (viewPos.y - node.y!) ** 2)
-      if (distance > 150) {
+      if (distance > 150 || !initiated) {
         network.focus(
           node.name,
           {
             scale: 1.25,
-            animation: loop
+            animation: initiated
               ? {
                   duration: 1000 + distance * 2,
                   easingFunction: 'easeInOutQuad',
@@ -227,7 +227,7 @@ onMounted(() => {
         },
       })
     }
-    loop += 1
+    initiated += 1
   })
 })
 </script>
