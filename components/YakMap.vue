@@ -165,15 +165,13 @@ onMounted(() => {
     }
   })
 
-  function changeCursor(cursorStyle: 'pointer' | 'default') {
-    if (container.value)
-      container.value.style.cursor = cursorStyle
-  }
   network.on('hoverNode', () => {
-    changeCursor('pointer')
+    if (container.value)
+      container.value.style.cursor = 'pointer'
   })
   network.on('blurNode', () => {
-    changeCursor('default')
+    if (container.value)
+      container.value.style.cursor = 'default'
   })
 
   watchEffect(() => {
