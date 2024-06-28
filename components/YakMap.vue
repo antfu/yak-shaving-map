@@ -165,10 +165,20 @@ onMounted(() => {
     }
   })
 
+  network.on('hoverNode', () => {
+    if (container.value)
+      container.value.style.cursor = 'pointer'
+  })
+  network.on('blurNode', () => {
+    if (container.value)
+      container.value.style.cursor = 'default'
+  })
+
   watchEffect(() => {
     network.setOptions({
       interaction: {
         dragNodes: !!props.isEditing,
+        hover: true,
       },
     })
   })
