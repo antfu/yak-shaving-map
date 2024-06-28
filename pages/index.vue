@@ -101,9 +101,4 @@ function prev() {
   color-scheme: dark;
   background: #050505;
 }
-
-div,
-button {
-  outline: none !important;
-}
 </style>

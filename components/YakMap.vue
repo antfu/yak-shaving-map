@@ -220,5 +220,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="container" h-full w-full outline-none />
+  <div ref="container" h-full w-full outline-none class="yak-map" />
 </template>
+
+<style>
+.yak-map div,
+.yak-map button {
+  outline: none !important;
+}
+</style>
