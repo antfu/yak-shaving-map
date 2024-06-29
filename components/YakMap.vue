@@ -210,7 +210,7 @@ onMounted(() => {
       network.fit({
         animation: initiated
           ? {
-              duration: 2000,
+              duration: 1500,
               easingFunction: 'easeInOutQuad',
             }
           : undefined,
@@ -228,7 +228,7 @@ onMounted(() => {
               scale: props.focusScale,
               animation: initiated
                 ? {
-                    duration: 1000 + distance * 2,
+                    duration: 600 + distance * 2,
                     easingFunction: 'easeInOutQuad',
                   }
                 : false,
