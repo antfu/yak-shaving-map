@@ -8,6 +8,7 @@ const query = useUrlSearchParams('history', {
     clicks: 1,
     mode: 'all' as 'all' | 'steps',
     embedded: false,
+    secondary: false,
   },
   removeFalsyValues: true,
   removeNullishValues: true,
@@ -47,6 +48,7 @@ function prev() {
       v-model:clicks="query.clicks"
       :is-editing="isEditing"
       :is-dark="isDark"
+      :show-secondary="query.secondary"
       :mode="query.mode"
       @edit="onEdit"
     />
@@ -62,7 +64,10 @@ function prev() {
       </div>
     </div>
     <div v-if="!query.embedded" flex="~ items-center gap-0.5" fixed right-4 top-4 rounded-1rem p2 text-gray backdrop-blur-md>
-      <button rounded-xl p3 hover:bg-gray:10 @click="toggleDark()">
+      <button rounded-xl p3 text-xl hover:bg-gray:10 @click="query.secondary = !query.secondary">
+        <div :class="query.secondary ? 'i-ph-circles-three-plus-duotone' : 'i-ph-circles-three-duotone'" />
+      </button>
+      <button rounded-xl p3 text-xl hover:bg-gray:10 @click="toggleDark()">
         <div i-ph-sun-duotone dark:i-ph-moon-duotone />
       </button>
     </div>

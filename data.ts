@@ -7,12 +7,29 @@ export interface ProjectNode extends Partial<Node> {
   link: string
   color?: string
   dashed?: boolean
+  faded?: boolean
   from?: string[]
   deps?: string[]
   animateStop?: boolean
 }
 
-export const projects: ProjectNode[] = [
+const colors = {
+  vue: '#34ba67',
+  nuxt: '#00DC82',
+  vite: '#454ce1',
+  unjs: '#982',
+  ts: '#007ACC',
+  vscode: '#007ACC',
+  vitesse: '#895',
+  slidev: '#2ae',
+  vitest: '#82ba34',
+  unplugin: '#525',
+  eslint: '#53f',
+  shiki: '#CB7676',
+  twoslash: '#183F66',
+}
+
+export const primary: ProjectNode[] = [
   {
     name: 'breadsplit',
     display: 'BreakSplit',
@@ -34,12 +51,12 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/vueuse/vueuse',
     from: ['breadsplit'],
     shape: 'circle',
-    color: '#42b883',
+    color: colors.vue,
   },
   {
     name: '@vue/composition-api',
     link: 'https://github.com/vuejs/composition-api',
-    color: '#42b883',
+    color: colors.vue,
     dashed: true,
     from: ['vueuse'],
   },
@@ -47,14 +64,14 @@ export const projects: ProjectNode[] = [
     name: 'vue-demi',
     display: 'VueDemi',
     link: 'https://github.com/vueuse/vue-demi',
-    color: '#42b883',
+    color: colors.vue,
     from: ['vueuse', '@vue/composition-api'],
   },
   {
     name: 'vue',
     display: 'Vue 3',
     link: 'https://github.com/vuejs/core',
-    color: '#42b883',
+    color: colors.vue,
     shape: 'circle',
     dashed: true,
     margin: 10 as any,
@@ -64,7 +81,7 @@ export const projects: ProjectNode[] = [
     name: 'vue-reactivity',
     display: 'Vue Reactivity',
     link: 'https://github.com/vue-reactivity',
-    color: '#42b883',
+    color: colors.vue,
     from: ['vue'],
   },
   {
@@ -81,7 +98,7 @@ export const projects: ProjectNode[] = [
     shape: 'circle',
     margin: 15 as any,
     link: 'https://github.com/vitejs/vite',
-    color: '#454ce1',
+    color: colors.vite,
     dashed: true,
     from: ['vue'],
   },
@@ -97,14 +114,13 @@ export const projects: ProjectNode[] = [
     name: 'vite-pwa',
     link: 'https://github.com/vite-pwa',
     color: '#750',
-    from: ['icones'],
+    from: ['icones', 'vite'],
   },
   {
     name: 'unplugin-vue-components',
     link: 'https://github.com/unplugin/unplugin-vue-components',
     color: '#525',
     from: ['icones'],
-    animateStop: false,
   },
   {
     name: 'unplugin-auto-import',
@@ -130,15 +146,24 @@ export const projects: ProjectNode[] = [
     from: ['unplugin-icons'],
   },
   {
+    name: 'vscode',
+    display: 'VS Code',
+    link: 'https://github.com/microsoft/vscode',
+    color: '#007ACC',
+    dashed: true,
+    shape: 'circle',
+    from: ['i18n-ally'],
+  },
+  {
     name: 'Iconify IntelliSense',
     link: 'https://github.com/antfu/vscode-iconify',
     color: '#814',
-    from: ['iconify'],
+    from: ['iconify', 'vscode'],
   },
   {
     name: 'vite-plugin-inspect',
     link: 'https://github.com/antfu-collective/vite-plugin-inspect',
-    color: '#454ce1',
+    color: colors.vite,
     from: ['unplugin-vue-components'],
   },
   {
@@ -146,20 +171,14 @@ export const projects: ProjectNode[] = [
     display: 'Vitesse',
     shape: 'circle',
     link: 'https://github.com/antfu/vitesse',
-    color: '#895',
+    color: colors.vitesse,
     from: ['icones', 'unplugin-vue-components', 'unplugin-auto-import', 'vite-pwa', 'unplugin-icons'],
     deps: ['vueuse'],
   },
   {
-    name: 'vitesse-theme',
-    link: 'https://github.com/antfu/vscode-theme-vitesse',
-    color: '#895',
-    from: ['vitesse', 'vueuse'],
-  },
-  {
     name: 'vitesse-webext',
     link: 'https://github.com/antfu/vitesse-webext',
-    color: '#895',
+    color: colors.vitesse,
     from: ['vitesse'],
   },
   {
@@ -239,32 +258,33 @@ export const projects: ProjectNode[] = [
     shape: 'circle',
     link: 'https://github.com/nuxt/nuxt',
     dashed: true,
-    color: '#00c58e',
+    margin: 18 as any,
+    color: colors.nuxt,
     from: ['vitesse'],
   },
   {
     name: 'vitesse-nuxt3',
     link: 'https://github.com/antfu/vitesse-nuxt3',
-    color: '#895',
+    color: colors.vitesse,
     from: ['vitesse', 'nuxt'],
   },
   {
     name: 'unplugin',
     link: 'https://github.com/unjs/unplugin',
-    color: '#982',
+    color: colors.unjs,
     from: ['nuxt'],
     deps: ['unplugin-icons', 'unplugin-auto-import', 'unplugin-vue-components'],
   },
   {
     name: 'unimport',
     link: 'https://github.com/unjs/unimport',
-    color: '#982',
+    color: colors.unjs,
     from: ['nuxt', 'unplugin-auto-import'],
   },
   {
     name: 'vite-node',
     link: 'https://github.com/vitest-dev/vitest/tree/main/packages/vite-node',
-    color: '#bd3',
+    color: colors.vitest,
     from: ['nuxt', 'vite'],
   },
   {
@@ -272,7 +292,7 @@ export const projects: ProjectNode[] = [
     display: 'Vitest',
     shape: 'circle',
     link: 'https://github.com/vitest-dev/vitest',
-    color: '#bd3',
+    color: colors.vitest,
     from: ['vite', 'vite-node'],
   },
   {
@@ -286,8 +306,7 @@ export const projects: ProjectNode[] = [
     display: 'Nuxt DevTools',
     link: 'https://github.com/nuxt/devtools',
     color: '#00c58e',
-    from: ['nuxt', 'vite-plugin-inspect'],
-    deps: ['birpc'],
+    from: ['nuxt', 'birpc', 'vite-plugin-inspect'],
   },
   {
     name: 'magicast',
@@ -295,6 +314,13 @@ export const projects: ProjectNode[] = [
     color: '#982',
     from: ['nuxt-devtools'],
     deps: ['nuxt'],
+  },
+  {
+    name: 'elk',
+    display: 'Elk',
+    link: 'https://github.com/elk-zone/elk',
+    color: '#ea9e44',
+    from: ['nuxt'],
   },
   {
     name: 'learn.nuxt.com',
@@ -309,33 +335,33 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/shikijs/shiki',
     dashed: true,
     shape: 'circle',
-    color: '#055',
+    color: colors.shiki,
     from: ['nuxt', 'antfu.me', 'slidev'],
   },
   {
     name: 'shiki-magic-move',
     link: 'https://github.com/shikijs/shiki-magic-move',
-    color: '#055',
+    color: colors.shiki,
     from: ['shiki', 'slidev'],
   },
   {
     name: 'shiki/monaco',
     link: 'https://github.com/shikijs/shiki',
-    color: '#055',
+    color: colors.shiki,
     from: ['learn.nuxt.com', 'shiki'],
   },
   {
     name: 'twoslash',
     display: 'Twoslash',
     link: 'https://github.com/twoslashes/twoslash',
-    color: '#055',
+    color: colors.twoslash,
     dashed: true,
     from: ['shiki'],
   },
   {
     name: '@antfu/eslint-config',
     link: 'https://github.com/antfu/eslint-config',
-    color: '#53f',
+    color: colors.eslint,
   },
   {
     name: 'eslint-stylistic',
@@ -346,34 +372,35 @@ export const projects: ProjectNode[] = [
   },
   {
     name: '@eslint/config-inspector',
+    display: 'ESLint Config Inspector',
     link: 'https://github.com/eslint/config-inspector',
-    color: '#53f',
+    color: colors.eslint,
     from: ['@antfu/eslint-config', 'nuxt-devtools'],
   },
   {
     name: 'eslint-plugin-format',
     link: 'https://github.com/antfu/eslint-plugin-format',
-    color: '#53f',
+    color: colors.eslint,
     from: ['@antfu/eslint-config'],
   },
   {
     name: 'eslint-plugin-command',
     link: 'https://github.com/antfu/eslint-plugin-command',
-    color: '#53f',
+    color: colors.eslint,
     animateStop: false,
     from: ['@antfu/eslint-config'],
   },
   {
     name: 'eslint-flat-config-utils',
     link: 'https://github.com/antfu/eslint-flat-config-utils',
-    color: '#53f',
+    color: colors.eslint,
     animateStop: false,
     from: ['@antfu/eslint-config'],
   },
   {
     name: 'eslint-typegen',
     link: 'https://github.com/antfu/eslint-typegen',
-    color: '#53f',
+    color: colors.eslint,
     animateStop: false,
     from: ['@antfu/eslint-config'],
   },
@@ -381,18 +408,168 @@ export const projects: ProjectNode[] = [
     name: '@nuxt/eslint',
     display: 'Nuxt ESLint',
     link: 'https://github.com/nuxt/eslint',
-    color: '#00c58e',
+    color: colors.nuxt,
     from: ['nuxt', 'eslint-typegen', '@eslint/config-inspector'],
   },
 ]
 
-export const secondaries: ProjectNode[] = [
+export const secondary: ProjectNode[] = [
+  {
+    name: 'handle',
+    display: 'Handle',
+    link: 'https://github.com/antfu/handle',
+    from: ['vitesse'],
+  },
+  {
+    name: 'v-dollar',
+    link: 'https://github.com/antfu/v-dollar',
+    color: colors.vue,
+    from: ['vue'],
+  },
+  {
+    name: 'vue-starport',
+    display: 'Vue Starport',
+    link: 'https://github.com/antfu/vue-starport',
+    color: colors.vue,
+    from: ['vue', 'slidev'],
+  },
+  {
+    name: 'vite-plugin-restart',
+    link: 'https://github.com/antfu/vite-plugin-restart',
+    color: colors.vite,
+    from: ['vite'],
+  },
+  {
+    name: 'vite-plugin-remote-assets',
+    link: 'https://github.com/antfu/vite-plugin-remote-assets',
+    color: colors.vite,
+    from: ['vite'],
+  },
+  {
+    name: 'vite-plugin-vue-server-ref',
+    link: 'https://github.com/antfu/vite-plugin-vue-server-ref',
+    color: colors.vite,
+    from: ['vite'],
+  },
+  {
+    name: 'vitesse-theme',
+    display: 'Vitesse Theme',
+    link: 'https://github.com/antfu/vscode-theme-vitesse',
+    color: colors.vitesse,
+    from: ['vscode', 'vueuse'],
+  },
+  {
+    name: 'qrcode-toolkit',
+    display: 'QR Toolkit',
+    link: 'https://github.com/antfu/qrcode-toolkit',
+  },
+  {
+    name: 'uqr',
+    link: 'https://github.com/unjs/uqr',
+    color: colors.unjs,
+    from: ['qrcode-toolkit'],
+  },
+  {
+    name: 'ni',
+    link: 'https://github.com/antfu/ni',
+    color: '#153',
+  },
+  {
+    name: 'sponsorkit',
+    display: 'SponsorKit',
+    link: 'https://github.com/antfu/sponsorkit',
+    color: '#a83266',
+  },
+  {
+    name: 'type-challenges',
+    display: 'Type Challenges',
+    link: 'https://github.com/type-challenges/type-challenges',
+    color: colors.ts,
+  },
+  {
+    name: 'esno',
+    link: 'https://github.com/antfu/esno',
+    from: ['type-challenges'],
+    color: colors.ts,
+  },
+  {
+    name: 'taze',
+    link: 'https://github.com/antfu/taze',
+    color: '#33b85d',
+  },
+  {
+    name: 'qr-scanner-wechat',
+    link: 'https://github.com/antfu/qr-scanner-wechat',
+    from: ['qrcode-toolkit'],
+    color: colors.vue,
+  },
+  {
+    name: 'vscode-file-nesting',
+    display: 'VS Code File Nesting',
+    link: 'https://github.com/antfu/vscode-file-nesting-config',
+    from: ['vscode'],
+    color: colors.vscode,
+  },
+  {
+    name: 'vscode-smart-clicks',
+    display: 'VS Code Smart Clicks',
+    link: 'https://github.com/antfu/vscode-smart-clicks',
+    from: ['vscode'],
+    color: colors.vscode,
+  },
+  {
+    name: 'retypewriter',
+    display: 'retypewriter',
+    link: 'https://github.com/antfu/retypewriter',
+    from: ['vscode'],
+    color: '#4cb833',
+  },
+  {
+    name: 'twoslash-vue',
+    display: 'Twoslash Vue',
+    link: 'https://github.com/twoslashes/twoslash',
+    color: colors.vue,
+    from: ['twoslash'],
+  },
+  {
+    name: 'vitepress-twoslash',
+    display: 'VitePress Twoslash',
+    link: 'https://github.com/shikijs/shiki',
+    color: colors.vue,
+    from: ['twoslash-vue'],
+  },
+  {
+    name: 'nuxt-content-twoslash',
+    display: 'Nuxt Content Twoslash',
+    color: colors.nuxt,
+    link: 'https://github.com/antfu/nuxt-content-twoslash',
+    from: ['vitepress-twoslash', 'nuxt'],
+  },
+  {
+    name: 'nuxt-icon',
+    display: 'Nuxt Icon',
+    link: 'https://github.com/nuxt/icon',
+    color: colors.nuxt,
+    dashed: true,
+    from: ['iconify', 'nuxt'],
+  },
+]
+
+secondary.forEach((p, idx) => {
+  p.faded = true
+  if (idx)
+    p.animateStop = false
+})
+
+export const all = [
+  ...primary,
+  ...secondary,
 ]
 
 for (const [id, pos] of Object.entries(poisitions) as [string, { x: number, y: number }][]) {
   if (!pos)
     continue
-  const project = projects.find(p => p.name === id) || secondaries.find(p => p.name === id)
+  const project = all.find(p => p.name === id)
   if (project)
     Object.assign(project, pos)
 }

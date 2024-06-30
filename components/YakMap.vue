@@ -4,12 +4,13 @@ import { DataSet } from 'vis-data'
 import { Network } from 'vis-network'
 import chroma from 'chroma-js'
 import type { ProjectNode } from '../data'
-import { poisitions, projects } from '../data'
+import * as DATA from '../data'
 
 const props = withDefaults(
   defineProps<{
     isEditing?: boolean
     isDark?: boolean
+    showSecondary?: boolean
     mode?: 'steps' | 'all'
     onEdit?: (data: any) => void
     focusScale?: number
@@ -18,6 +19,7 @@ const props = withDefaults(
   {
     isEditing: false,
     isDark: true,
+    showSecondary: false,
     mode: 'all',
     focusScale: 1.5,
   },
@@ -26,6 +28,7 @@ const clicks = defineModel('clicks', { default: 1, type: Number })
 
 const container = ref<HTMLDivElement>()
 
+const collection = computed(() => props.showSecondary ? DATA.all : DATA.primary)
 const backgroundColor = computed(() => props.backgroundColor || (props.isDark ? '#050505' : '#ffff'))
 const luminance = computed(() => props.isDark ? 0.7 : 0.6)
 
@@ -48,17 +51,17 @@ function toNode(project: ProjectNode, focus = false) {
         }
       : {},
     font: {
-      color: getColor(),
+      color: getColor(project.faded ? 0.75 : 1),
     },
     color: {
-      border: getColor(project.dashed ? 0.2 : 0.5),
-      background: getColor(project.dashed ? 0.03 : 0.05),
+      border: getColor(project.faded ? 0.05 : project.dashed ? 0.2 : 0.5),
+      background: getColor(project.faded ? 0.02 : project.dashed ? 0.05 : 0.05),
       highlight: {
-        border: getColor(project.dashed ? 0.2 : 0.5),
+        border: getColor((project.dashed || project.faded) ? 0.2 : 0.5),
         background: getColor(0.1),
       },
       hover: {
-        border: getColor(project.dashed ? 0.2 : 0.5),
+        border: getColor((project.dashed || project.faded) ? 0.2 : 0.5),
         background: getColor(0.07),
       },
     },
@@ -96,28 +99,28 @@ function toEdges(project: ProjectNode) {
 }
 
 function next() {
-  clicks.value = Math.min(+clicks.value + 1, projects.length)
+  clicks.value = Math.min(+clicks.value + 1, DATA.primary.length)
 }
 
 function prev() {
   clicks.value = Math.max(+clicks.value - 1, 1)
 }
 
-const animationStops = computed(() => projects.filter(p => p.animateStop !== false))
+const animationStops = computed(() => collection.value.filter(p => p.animateStop !== false))
 
 defineExpose({
   next,
   prev,
-  count: computed(() => projects.length),
+  count: computed(() => collection.value.length),
   stops: computed(() => animationStops.value.length),
 })
 
 function getCurrentItems() {
   if (props.mode === 'all')
-    return projects
+    return collection.value
   const list: ProjectNode[] = []
   let count = 0
-  for (const item of projects) {
+  for (const item of collection.value) {
     if (item.animateStop !== false)
       count += 1
     if (count > +clicks.value)
@@ -170,7 +173,7 @@ onMounted(() => {
 
   function save() {
     if (props.isEditing)
-      props.onEdit?.(Object.assign({}, poisitions, network.getPositions()))
+      props.onEdit?.(Object.assign({}, DATA.poisitions, network.getPositions()))
   }
 
   network.on('stabilized', () => save())
@@ -189,7 +192,7 @@ onMounted(() => {
     }
     // Click on a node, open the link
     else if (arg.nodes.length === 1) {
-      const project = projects.find(p => p.name === arg.nodes[0])
+      const project = collection.value.find(p => p.name === arg.nodes[0])
       if (project?.link)
         window.open(project.link, '_blank')
     }
@@ -224,7 +227,9 @@ onMounted(() => {
     edges.remove(edges.getIds().filter(id => !items.some(p => (id as string).startsWith(`${p.name}|`))))
 
     // Fit all nodes
-    if (items.length >= projects.length || props.mode === 'all') {
+    if (items.length >= DATA.primary.length || props.mode === 'all') {
+      // Reset previous animation, so it moves smoothly
+      network.moveTo({ position: network.getViewPosition(), scale: network.getScale() })
       network.fit({
         animation: initiated
           ? {
@@ -242,7 +247,7 @@ onMounted(() => {
         const distance = Math.sqrt((viewPos.x - node.x!) ** 2 + (viewPos.y - node.y!) ** 2)
         if (distance > 200 || !initiated || +clicks.value === 1) {
           // Reset previous animation, so it moves smoothly
-          network.moveTo({ position: network.getViewPosition() })
+          network.moveTo({ position: network.getViewPosition(), scale: network.getScale() })
           // Focus on the node
           network.focus(
             node.name,
