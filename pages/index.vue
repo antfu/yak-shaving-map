@@ -2,7 +2,6 @@
 import { onKeyStroke, useDark, useUrlSearchParams } from '@vueuse/core'
 import { computed, shallowRef } from 'vue'
 import YakMap from '../components/YakMap.vue'
-import { projects } from '../data'
 
 const query = useUrlSearchParams('history', {
   initialValue: {
@@ -90,7 +89,7 @@ function prev() {
       </button>
     </div>
     <div v-if="query.mode === 'steps'" fixed bottom-0 left-0 right-0 z-100>
-      <div h-1px :style="{ width: `${query.clicks / projects.length * 100}%` }" bg-teal />
+      <div h-1px :style="{ width: `${query.clicks / (map?.stops || 1) * 100}%` }" bg-teal />
     </div>
   </div>
 </template>

@@ -22,7 +22,6 @@ const props = withDefaults(
     focusScale: 1.5,
   },
 )
-
 const clicks = defineModel('clicks', { default: 1, type: Number })
 
 const container = ref<HTMLDivElement>()
@@ -104,15 +103,34 @@ function prev() {
   clicks.value = Math.max(+clicks.value - 1, 1)
 }
 
+const animationStops = computed(() => projects.filter(p => p.animateStop !== false))
+
 defineExpose({
   next,
   prev,
   count: computed(() => projects.length),
+  stops: computed(() => animationStops.value.length),
 })
 
+function getCurrentItems() {
+  if (props.mode === 'all')
+    return projects
+  const list: ProjectNode[] = []
+  let count = 0
+  for (const item of projects) {
+    if (item.animateStop !== false)
+      count += 1
+    if (count > +clicks.value)
+      break
+    list.push(item)
+  }
+  return list
+}
+
 onMounted(() => {
-  const nodes = new DataSet(projects.slice(0, +clicks.value).map(project => toNode(project)))
-  const edges = new DataSet(projects.slice(0, +clicks.value).flatMap(project => toEdges(project)))
+  const items = getCurrentItems()
+  const nodes = new DataSet(items.map(item => toNode(item)))
+  const edges = new DataSet(items.flatMap(item => toEdges(item)))
 
   // create a network
   const network = new Network(
@@ -197,16 +215,16 @@ onMounted(() => {
 
   let initiated = 0
   watchEffect(() => {
-    const visible = props.mode === 'steps'
-      ? projects.slice(0, +clicks.value)
-      : projects
-    nodes.update(visible.map((project, idx) => toNode(project, props.mode === 'steps' && idx === +clicks.value - 1)))
-    edges.update(visible.flatMap(project => toEdges(project)))
+    const items = getCurrentItems()
 
-    nodes.remove(nodes.getIds().filter(id => !visible.some(p => p.name === id)))
-    edges.remove(edges.getIds().filter(id => !visible.some(p => (id as string).startsWith(`${p.name}|`))))
+    nodes.update(items.map((item, idx) => toNode(item, props.mode === 'steps' && idx === items.length - 1)))
+    edges.update(items.flatMap(item => toEdges(item)))
 
-    if (+clicks.value >= projects.length || props.mode === 'all') {
+    nodes.remove(nodes.getIds().filter(id => !items.some(p => p.name === id)))
+    edges.remove(edges.getIds().filter(id => !items.some(p => (id as string).startsWith(`${p.name}|`))))
+
+    // Fit all nodes
+    if (items.length >= projects.length || props.mode === 'all') {
       network.fit({
         animation: initiated
           ? {
@@ -216,14 +234,16 @@ onMounted(() => {
           : undefined,
       })
     }
+    // Focus on the last node
     else {
-      const node = projects[+clicks.value - 1]
+      const node = items[items.length - 1]
       if (node) {
         const viewPos = network.getViewPosition()
         const distance = Math.sqrt((viewPos.x - node.x!) ** 2 + (viewPos.y - node.y!) ** 2)
         if (distance > 200 || !initiated || +clicks.value === 1) {
-          // reset previous animation, so it moves smoothly
+          // Reset previous animation, so it moves smoothly
           network.moveTo({ position: network.getViewPosition() })
+          // Focus on the node
           network.focus(
             node.name,
             {

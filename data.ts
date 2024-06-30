@@ -9,6 +9,7 @@ export interface ProjectNode extends Partial<Node> {
   dashed?: boolean
   from?: string[]
   deps?: string[]
+  animateStop?: boolean
 }
 
 export const projects: ProjectNode[] = [
@@ -72,6 +73,7 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/antfu/reactivue',
     color: '#42b8a6',
     from: ['vue'],
+    animateStop: false,
   },
   {
     name: 'vite',
@@ -102,18 +104,21 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/unplugin/unplugin-vue-components',
     color: '#525',
     from: ['icones'],
+    animateStop: false,
   },
   {
     name: 'unplugin-auto-import',
     link: 'https://github.com/unplugin/unplugin-auto-import',
     color: '#525',
     from: ['icones'],
+    animateStop: false,
   },
   {
     name: 'unplugin-icons',
     link: 'https://github.com/unplugin/unplugin-icons',
     color: '#525',
     from: ['icones'],
+    animateStop: false,
   },
   {
     name: 'iconify',
@@ -211,6 +216,7 @@ export const projects: ProjectNode[] = [
     link: 'https://github.com/antfu/drauu',
     color: '#2ae',
     from: ['slidev'],
+    animateStop: false,
   },
   {
     name: 'unocss',
@@ -228,19 +234,19 @@ export const projects: ProjectNode[] = [
     from: ['unocss', 'iconify'],
   },
   {
-    name: 'vitesse-nuxt3',
-    link: 'https://github.com/antfu/vitesse-nuxt3',
-    color: '#895',
-    from: ['vitesse'],
-  },
-  {
     name: 'nuxt',
     display: 'Nuxt',
     shape: 'circle',
     link: 'https://github.com/nuxt/nuxt',
     dashed: true,
     color: '#00c58e',
-    from: ['vitesse', 'vitesse-nuxt3'],
+    from: ['vitesse'],
+  },
+  {
+    name: 'vitesse-nuxt3',
+    link: 'https://github.com/antfu/vitesse-nuxt3',
+    color: '#895',
+    from: ['vitesse', 'nuxt'],
   },
   {
     name: 'unplugin',
@@ -342,19 +348,33 @@ export const projects: ProjectNode[] = [
     name: '@eslint/config-inspector',
     link: 'https://github.com/eslint/config-inspector',
     color: '#53f',
+    from: ['@antfu/eslint-config', 'nuxt-devtools'],
+  },
+  {
+    name: 'eslint-plugin-format',
+    link: 'https://github.com/antfu/eslint-plugin-format',
+    color: '#53f',
     from: ['@antfu/eslint-config'],
-    deps: ['nuxt-devtools'],
+  },
+  {
+    name: 'eslint-plugin-command',
+    link: 'https://github.com/antfu/eslint-plugin-command',
+    color: '#53f',
+    animateStop: false,
+    from: ['@antfu/eslint-config'],
   },
   {
     name: 'eslint-flat-config-utils',
     link: 'https://github.com/antfu/eslint-flat-config-utils',
     color: '#53f',
+    animateStop: false,
     from: ['@antfu/eslint-config'],
   },
   {
     name: 'eslint-typegen',
     link: 'https://github.com/antfu/eslint-typegen',
     color: '#53f',
+    animateStop: false,
     from: ['@antfu/eslint-config'],
   },
   {
@@ -362,15 +382,21 @@ export const projects: ProjectNode[] = [
     display: 'Nuxt ESLint',
     link: 'https://github.com/nuxt/eslint',
     color: '#00c58e',
-    from: ['@antfu/eslint-config', 'nuxt'],
+    from: ['nuxt', 'eslint-typegen', '@eslint/config-inspector'],
   },
 ]
 
+export const secondaries: ProjectNode[] = [
+]
+
 for (const [id, pos] of Object.entries(poisitions) as [string, { x: number, y: number }][]) {
-  const project = projects.find(p => p.name === id)
-  if (!project || !pos)
+  if (!pos)
     continue
-  Object.assign(project, pos)
+  const project = projects.find(p => p.name === id) || secondaries.find(p => p.name === id)
+  if (project)
+    Object.assign(project, pos)
 }
 
-export { poisitions }
+export {
+  poisitions,
+}
