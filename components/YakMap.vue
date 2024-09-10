@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watchEffect } from 'vue'
+import chroma from 'chroma-js'
 import { DataSet } from 'vis-data'
 import { Network } from 'vis-network'
-import chroma from 'chroma-js'
-import type { ProjectNode } from '../data'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import * as DATA from '../data'
+import type { ProjectNode } from '../data'
 
 const props = withDefaults(
   defineProps<{
